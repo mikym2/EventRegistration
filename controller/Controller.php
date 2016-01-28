@@ -16,6 +16,7 @@ class Controller{
 		$name = InputValidator::validate_input($particicpant_name);
 		if($name ==null|| strlen($name)==0){
 			throw new Exception("Participant name cannot be empty!");
+		
 			
 		}else{
 			//2. load all data
@@ -32,6 +33,39 @@ class Controller{
 	}
 	
 	public function createEvent($event_name, $event_date, $startTime, $endTime){
+		$eventName = InputValidator::validate_input($event_name);
+		//$eventDate = InputValidator::validate_input($event_date);
+		//$eventStartTime = InputValidator::validate_input($startTime);
+		//$eventEndTime = InputValidator::validate_input($endTime);
+		
+		if($eventName==null){ 
+			throw new Exception("Event name cannot be empty!");
+		}
+		
+		//TODO: need to be able to handle when the event_date input is not in the proper format
+		if($event_date ==null ){
+			throw new Exception("Event date must be specified correctly (YYYY-MM-DD)!");
+		}
+		
+		//TODO: need to be able to handle when the start and endtime input are not in the proper format
+		if($startTime>=$endTime){
+			throw new Exception("Event end time cannot be before event start time!");
+		}
+		
+		 else {
+			
+			//2. load all data
+			$pm = new PersistenceEventRegistration();
+			$rm = $pm->loadDataFromStore();
+			
+			//3 Add event
+			$event = new Event($eventName, $event_date, $startTime, $endTime);
+			$rm->addEvent($event);
+			
+			//4 Write all of the data
+			$pm->writeDataToStore($rm);
+		}
+		
 		
 	}
 	

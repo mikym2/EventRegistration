@@ -1,29 +1,26 @@
 <?php
 require_once 'controller\Controller.php';
+
 session_start();
-$_SESSION["errorRegisterParticipant"] = "";
-$_SESSION["errorRegisterEvent"] = "";
 $c = new Controller();
 try {
-$participant = NULL;
-if (isset($_POST['participantspinner'])) {
-$participant = $_POST['participantspinner'];
-}
-$event = NULL;
-if (isset($_POST['eventspinner'])) {
-$event = $_POST['eventspinner'];
-}
-$c->register($participant, $event);
+	$date = $_POST["event_date"];
+	date('Y-m-d', strtotime($date));
+	
+	$start = $_POST["starttime"];
+	date('H:i', strtotime($start));
+	
+	$end = $_POST["endtime"];
+	date('H:i', strtotime($end));
+	
+	$c->createEvent($_POST["event_name"], $date, $start, $end);
+	$_SESSION["errorEvent"] = "";
+	$_SESSION["errorDate"]="";
+	$_SESSION["endBeforeStart"];
 } catch (Exception $e) {
-$errors = explode("@", $e->getMessage());
-foreach ($errors as $error) {
-if (substr($error, 0, 1) == "1") {
-$_SESSION["errorRegisterParticipant"] = substr($error, 1);
-}
-if (substr($error, 0, 1) == "2") {
-$_SESSION["errorRegisterEvent"] = substr($error, 1);
-}
-}
+	$_SESSION["errorEvent"] = $e->getMessage();
+	$_SESSION["errorDate"]= $e->getMessage();
+	$_SESSION["endBeforeStart"]= $e->getMessage();
 }
 ?>
 <!DOCTYPE html>
