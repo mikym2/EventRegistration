@@ -34,25 +34,30 @@ class Controller{
 	
 	public function createEvent($event_name, $event_date, $startTime, $endTime){
 		$eventName = InputValidator::validate_input($event_name);
-		//$eventDate = InputValidator::validate_input($event_date);
-		//$eventStartTime = InputValidator::validate_input($startTime);
-		//$eventEndTime = InputValidator::validate_input($endTime);
 		$error ="";
-		//@1Event name cannot be empty! @2Event date must be specified correctly (YYYY-MM-DD)! @3Event start time must be specified correctly (HH:MM)! @4Event end time must be specified correctly (HH:MM)!"
-		//TODO: deal with start and end time not being proper
+		
 		if($event_name==NULL){
 				$error .="@1Event name cannot be empty! ";
 					
 			}
-			if($event_date == NULL){
+			if($event_date == NULL ){
 				$error .="@2Event date must be specified correctly (YYYY-MM-DD)! ";
 					
 			}
-			if($startTime>=$endTime){
+			if($startTime == NULL){
+				$error.="@3Event start time must be specified correctly (HH:MM)! ";
+			}
+			
+			if($endTime == NULL){
+				$error.= "@4Event end time must be specified correctly (HH:MM)!";
+			}
+			
+			if($endTime!=NULL && $startTime>=$endTime){
 				$error .="@4Event end time cannot be before event start time!";
 			}
 			
-			if($event_name==NULL||$event_date == NULL||$startTime>=$endTime){
+			
+			if($event_name==NULL||$event_date == NULL||$startTime>=$endTime||$startTime == NULL||$endTime == NULL){
 			throw new Exception(trim($error));
 			
 			}else {

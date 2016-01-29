@@ -79,19 +79,27 @@
 	 
 	<?php
     if(isset($_SESSION['errorDate']) && !empty($_SESSION['errorDate']) ){
-			echo " * " . $_SESSION["errorDate"]; //&& strcmp($_SESSION['errorDate'],"Event date must be specified correctly (YYYY-MM-DD)!")==0 
+			echo " * " . $_SESSION["errorDate"]; 
 		}
 	?>
 	
 	<p>Start time?<input type="time" name="starttime" 
 	 value="<?php echo date('H:i'); ?>" />
+	 <?php
+    if(isset($_SESSION['startTimeError']) && !empty($_SESSION['startTimeError']) ){
+			echo " * " . $_SESSION["startTimeError"]; 
+		}
+	?>
 	 
 	 <p>End time?<input type="time" name="endtime" 
 	 value="<?php echo date('H:i'); ?>" />
 	 
 	 <?php
-    if(isset($_SESSION['endBeforeStart']) && !empty($_SESSION['endBeforeStart']) && strcmp($_SESSION['endBeforeStart'],"Event end time cannot be before event start time!")==0 ){
+    if(isset($_SESSION['endBeforeStart']) && !empty($_SESSION['endBeforeStart'])){
 			echo " * " . $_SESSION["endBeforeStart"];
+		}
+	if(isset($_SESSION['endTimeError']) && !empty($_SESSION['endTimeError'])  ){
+			echo " * " . $_SESSION["endTimeError"];
 		}
 	?>
 	 
