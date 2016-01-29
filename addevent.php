@@ -2,8 +2,12 @@
 require_once 'controller\Controller.php';
 
 session_start();
+
+
+
 $c = new Controller();
 try {
+	
 	$date = $_POST["event_date"];
 	date('Y-m-d', strtotime($date));
 	
@@ -14,13 +18,25 @@ try {
 	date('H:i', strtotime($end));
 	
 	$c->createEvent($_POST["event_name"], $date, $start, $end);
-	$_SESSION["errorEvent"] = "";
+	
+	$_SESSION["errorEvent"] ="";
 	$_SESSION["errorDate"]="";
-	$_SESSION["endBeforeStart"];
+	$_SESSION["endBeforeStart"]="";
+	
 } catch (Exception $e) {
-	$_SESSION["errorEvent"] = $e->getMessage();
-	$_SESSION["errorDate"]= $e->getMessage();
-	$_SESSION["endBeforeStart"]= $e->getMessage();
+	
+$errors = explode("@", $e->getMessage());
+			foreach ($errors as $error) {
+				if (substr($error, 0, 1) == "1") {
+						$_SESSION["errorEvent"] = substr($error, 1);
+					}
+				if (substr($error, 0, 1) == "2") {
+						$_SESSION["errorDate"] = substr($error, 1);
+					}
+				if (substr($error, 0, 1) == "4") {
+						$_SESSION["endBeforeStart"] = substr($error, 1);
+					}
+				}
 }
 ?>
 <!DOCTYPE html>

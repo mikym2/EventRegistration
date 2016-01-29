@@ -65,8 +65,9 @@
 	<p>Name? <input type="text" name="event_name" />
 		<span class="error">
 		<?php 
-		if(isset($_SESSION['errorEvent']) && !empty($_SESSION['errorEvent']) && strcmp($_SESSION['errorEvent'],"Event name cannot be empty!")==0){
-			echo " * " . $_SESSION["errorEvent"];
+		
+		if(isset($_SESSION['errorEvent']) && !empty($_SESSION['errorEvent']) ){
+			echo " * " . $_SESSION["errorEvent"]; //&& strcmp($_SESSION['errorEvent'],"Event name cannot be empty!")==0
 		}
 		?>
 		</span></p>
@@ -77,8 +78,8 @@
 	 ?>"/>  
 	 
 	<?php
-    if(isset($_SESSION['errorDate']) && !empty($_SESSION['errorDate']) && strcmp($_SESSION['errorDate'],"Event date must be specified correctly (YYYY-MM-DD)!")==0 ){
-			echo " * " . $_SESSION["errorDate"];
+    if(isset($_SESSION['errorDate']) && !empty($_SESSION['errorDate']) ){
+			echo " * " . $_SESSION["errorDate"]; //&& strcmp($_SESSION['errorDate'],"Event date must be specified correctly (YYYY-MM-DD)!")==0 
 		}
 	?>
 	
